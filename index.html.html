@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ghalia Ben Salem · Cybersécurité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEF1F5; --ink:#15203B; --muted:#56607A; --rule:#C9D0DC;
+  --accent:#3347C9; --bar:#15203B; --chip:#E1E6EF; --surface:#FFFFFF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1626; --ink:#E6EAF2; --muted:#9AA4BB; --rule:#2A3550;
+    --accent:#8C9BFF; --bar:#E6EAF2; --chip:#1B2438; --surface:#152038;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1626; --ink:#E6EAF2; --muted:#9AA4BB; --rule:#2A3550;
+  --accent:#8C9BFF; --bar:#E6EAF2; --chip:#1B2438; --surface:#152038;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* language switch */
+html[data-lang="fr"] [lang="en"]{display:none}
+html[data-lang="en"] [lang="fr"]{display:none}
+
+header.top{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:10;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.top .in{max-width:760px;margin:0 auto;padding:.7rem 1.25rem;display:flex;gap:1rem;align-items:center;justify-content:space-between}
+.top nav{display:flex;gap:1.1rem;overflow-x:auto;scrollbar-width:none}
+.top nav a{color:var(--muted);text-decoration:none;font-size:.95rem;white-space:nowrap}
+.top nav a:hover{color:var(--ink)}
+.langbtn{
+  flex:none;font:inherit;font-size:.9rem;font-weight:700;color:var(--ink);
+  background:var(--chip);border:0;border-radius:999px;padding:.35rem .8rem;cursor:pointer;
+}
+
+main{max-width:760px;margin:0 auto;padding:0 1.25rem 4rem}
+
+/* hero: the redaction reveal */
+.hero{padding:4.5rem 0 3rem}
+.hero h1{
+  font-size:clamp(2.6rem,9vw,4.6rem);line-height:1;font-weight:900;
+  letter-spacing:-.03em;margin:0 0 1.4rem;
+}
+.hero .lines{font-size:clamp(1.15rem,3.2vw,1.4rem);line-height:1.45;max-width:34ch;margin:0}
+.redact{position:relative;display:inline}
+.redact::after{
+  content:"";position:absolute;left:0;top:.08em;bottom:.02em;right:0;
+  background:var(--bar);transform-origin:right center;
+  animation:lift .7s cubic-bezier(.7,0,.2,1) forwards;animation-delay:var(--d,0s);
+}
+h1 .redact::after{top:.05em;bottom:.05em}
+@keyframes lift{to{transform:scaleX(0)}}
+@media (prefers-reduced-motion: reduce){.redact::after{display:none}}
+.status{
+  margin-top:2rem;display:inline-flex;align-items:center;gap:.55rem;
+  font-size:.98rem;color:var(--ink);background:var(--surface);
+  border:1px solid var(--rule);border-radius:999px;padding:.45rem .95rem;
+}
+.status .dot{width:.55rem;height:.55rem;border-radius:50%;background:#1F9D63;flex:none}
+.cta{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.4rem}
+.btn{
+  display:inline-block;text-decoration:none;font-weight:700;font-size:.98rem;
+  padding:.65rem 1.15rem;border-radius:8px;border:2px solid var(--ink);color:var(--ink);
+}
+.btn.solid{background:var(--ink);color:var(--paper)}
+
+section{padding:2.8rem 0;border-top:1px solid var(--rule)}
+h2{font-size:1.65rem;line-height:1.2;letter-spacing:-.015em;margin:0 0 1.4rem;font-weight:900}
+h3{font-size:1.1rem;margin:0;font-weight:700;line-height:1.3}
+p{margin:0 0 1rem;max-width:68ch}
+.muted{color:var(--muted)}
+
+/* timeline: real sequence */
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{display:grid;grid-template-columns:7.5rem 1fr;gap:1rem;padding:.9rem 0;border-bottom:1px dashed var(--rule)}
+.timeline li:last-child{border-bottom:0}
+.when{color:var(--muted);font-size:.95rem;padding-top:.1rem}
+.timeline p{margin:.25rem 0 0;font-size:1rem}
+@media (max-width:520px){.timeline li{grid-template-columns:1fr;gap:.2rem}}
+
+/* skills */
+.skills{display:grid;gap:1.4rem}
+.skillrow h3{margin-bottom:.55rem}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;list-style:none;margin:0;padding:0}
+.chips li{background:var(--chip);border-radius:6px;padding:.25rem .65rem;font-size:.95rem}
+
+/* projects: rows, not cards */
+.proj{display:grid;grid-template-columns:1fr;gap:0}
+.proj article{padding:1.2rem 0;border-bottom:1px solid var(--rule)}
+.proj article:last-child{border-bottom:0}
+.proj .where{color:var(--muted);font-size:.93rem;margin:.15rem 0 .45rem}
+.proj p{margin:0;font-size:1rem}
+.tags{margin-top:.55rem;font-size:.88rem;color:var(--accent);font-weight:500}
+
+/* human side */
+.human{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.6rem 2rem}
+.human p{font-size:1rem;margin:.35rem 0 0}
+.langs{list-style:none;padding:0;margin:.4rem 0 0;font-size:1rem}
+.langs li{display:flex;justify-content:space-between;border-bottom:1px dashed var(--rule);padding:.2rem 0}
+.langs span:last-child{color:var(--muted)}
+
+/* contact */
+.contact{background:var(--ink);color:var(--paper);border-radius:14px;padding:2rem 1.6rem;border-top:0;margin-top:1rem}
+.contact h2{color:var(--paper)}
+.contact p{color:color-mix(in srgb,var(--paper) 80%,var(--ink))}
+.contact .links{display:flex;flex-direction:column;gap:.6rem;margin-top:1.2rem}
+.contact a{color:var(--paper);font-weight:700;font-size:1.1rem;word-break:break-all}
+footer{max-width:760px;margin:0 auto;padding:1.5rem 1.25rem 2.5rem;color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="in">
+    <nav aria-label="Sections">
+      <a href="#parcours"><span lang="fr">Parcours</span><span lang="en">Background</span></a>
+      <a href="#competences"><span lang="fr">Compétences</span><span lang="en">Skills</span></a>
+      <a href="#projets"><span lang="fr">Projets</span><span lang="en">Projects</span></a>
+      <a href="#humain"><span lang="fr">Au-delà du code</span><span lang="en">Beyond code</span></a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="langbtn" id="langbtn" type="button" aria-label="Switch language">EN</button>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h1><span class="redact" style="--d:.15s">Ghalia</span><br><span class="redact" style="--d:.3s">Ben Salem</span></h1>
+    <p class="lines" lang="fr">
+      <span class="redact" style="--d:.55s">Étudiante en master de cybersécurité à l'EPFL.</span>
+      <span class="redact" style="--d:.75s">Sécurité offensive, technologies de protection de la vie privée</span>
+      <span class="redact" style="--d:.95s">et IA appliquée.</span>
+    </p>
+    <p class="lines" lang="en">
+      <span class="redact" style="--d:.55s">Cybersecurity Master's student at EPFL.</span>
+      <span class="redact" style="--d:.75s">Offensive security, privacy-enhancing technologies</span>
+      <span class="redact" style="--d:.95s">and applied AI.</span>
+    </p>
+    <div class="status">
+      <span class="dot" aria-hidden="true"></span>
+      <span lang="fr">Recherche un stage à partir de novembre 2026 : sécurité de l'IA, SOC / SOAR</span>
+      <span lang="en">Looking for an internship from November 2026: AI security, SOC / SOAR</span>
+    </div>
+    <div class="cta">
+      <a class="btn solid" href="#contact"><span lang="fr">Me contacter</span><span lang="en">Get in touch</span></a>
+      <a class="btn" href="#projets"><span lang="fr">Voir mes projets</span><span lang="en">See my projects</span></a>
+    </div>
+  </div>
+
+  <section id="parcours">
+    <h2><span lang="fr">Parcours</span><span lang="en">Background</span></h2>
+    <ol class="timeline">
+      <li>
+        <div class="when"><span lang="fr">En cours</span><span lang="en">Current</span></div>
+        <div>
+          <h3><span lang="fr">Master en cybersécurité, EPFL</span><span lang="en">MSc in Cybersecurity, EPFL</span></h3>
+          <p class="muted"><span lang="fr">Après un Bachelor à l'EPFL.</span><span lang="en">Following a Bachelor's at EPFL.</span></p>
+        </div>
+      </li>
+      <li>
+        <div class="when"><span lang="fr">En cours</span><span lang="en">Current</span></div>
+        <div>
+          <h3><span lang="fr">Assistante de recherche, UNIL HEC</span><span lang="en">Student Researcher, UNIL HEC</span></h3>
+          <p class="muted"><span lang="fr">Sous la supervision de Vera Sosnovik, en collaboration avec le groupe du Prof. Mathias Humbert (Information Security and Digital Trust).</span><span lang="en">Supervised by Vera Sosnovik, in collaboration with Prof. Mathias Humbert's Information Security and Digital Trust group.</span></p>
+        </div>
+      </li>
+      <li>
+        <div class="when"><span lang="fr">Été 2024</span><span lang="en">Summer 2024</span></div>
+        <div>
+          <h3><span lang="fr">Stage en tests d'intrusion, EY</span><span lang="en">Penetration testing intern, EY</span></h3>
+          <p class="muted"><span lang="fr">Participation à une mission red team évaluant un chatbot de service client sur WhatsApp et Facebook Messenger.</span><span lang="en">Took part in a red team engagement assessing a customer service chatbot on WhatsApp and Facebook Messenger.</span></p>
+        </div>
+      </li>
+      <li>
+        <div class="when">EPFL · UNIL</div>
+        <div>
+          <h3><span lang="fr">Assistante d'enseignement</span><span lang="en">Teaching assistant</span></h3>
+          <p class="muted"><span lang="fr">Cours de cybersécurité : questions d'évaluation et corrigés (attaques temporelles, NIDS, phishing, sécurité des mots de passe…).</span><span lang="en">Cybersecurity courses: evaluation questions and homework solutions (timing attacks, NIDS, phishing, password security…).</span></p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="competences">
+    <h2><span lang="fr">Compétences</span><span lang="en">Skills</span></h2>
+    <div class="skills">
+      <div class="skillrow">
+        <h3><span lang="fr">Sécurité offensive</span><span lang="en">Offensive security</span></h3>
+        <ul class="chips"><li>Pentesting</li><li>Fuzzing</li><li>Red teaming LLM</li><li>CTF</li><li>Burp Suite</li></ul>
+      </div>
+      <div class="skillrow">
+        <h3><span lang="fr">Défense et SOC (cours)</span><span lang="en">Defense and SOC (coursework)</span></h3>
+        <ul class="chips"><li>SIEM</li><li><span lang="fr">Règles Sigma</span><span lang="en">Sigma rules</span></li><li><span lang="fr">Gestion d'incidents</span><span lang="en">Incident management</span></li><li>CI</li></ul>
+      </div>
+      <div class="skillrow">
+        <h3><span lang="fr">Vie privée et cryptographie appliquée</span><span lang="en">Privacy and applied crypto</span></h3>
+        <ul class="chips"><li><span lang="fr">Calcul multipartite (MPC)</span><span lang="en">Multi-party computation (MPC)</span></li><li>Secret sharing</li><li>Differential privacy</li><li>SCION</li></ul>
+      </div>
+      <div class="skillrow">
+        <h3><span lang="fr">IA appliquée</span><span lang="en">Applied AI</span></h3>
+        <ul class="chips"><li><span lang="fr">Classification</span><span lang="en">Classification</span></li><li>NLP</li><li>LLM</li></ul>
+      </div>
+      <div class="skillrow">
+        <h3><span lang="fr">Langages et outils</span><span lang="en">Languages and tools</span></h3>
+        <ul class="chips"><li>Python</li><li>C / C++</li><li>Go</li><li>Bash</li><li>Linux</li><li>Docker</li><li>Git</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projets">
+    <h2><span lang="fr">Projets et recherche</span><span lang="en">Projects and research</span></h2>
+    <div class="proj">
+      <article>
+        <h3><span lang="fr">Vérification automatique d'affirmations politiques</span><span lang="en">Automated political claim verification</span></h3>
+        <div class="where">UNIL HEC</div>
+        <p><span lang="fr">Pipeline complet qui extrait les affirmations factuelles de transcriptions YouTube de politiciens français et les vérifie : recherche sémantique LaBSE, re-classement par GPT-4o-mini, Google Fact Check API et revue manuelle.</span><span lang="en">End-to-end pipeline extracting factual claims from French politicians' YouTube transcripts and verifying them: LaBSE semantic retrieval, GPT-4o-mini re-ranking, Google Fact Check API and manual review.</span></p>
+        <div class="tags">NLP · LLM · Python</div>
+      </article>
+      <article>
+        <h3><span lang="fr">Détection du greenwashing dans la publicité</span><span lang="en">Greenwashing detection in advertising</span></h3>
+        <div class="where">UNIL HEC</div>
+        <p><span lang="fr">Collecte et annotation manuelle d'un large corpus de publicités Meta, puis classifieur Random Forest (environ 90 % de précision) et détection par LLM.</span><span lang="en">Collected and manually labeled a large corpus of Meta ads, then trained a Random Forest classifier (about 90% accuracy) and explored LLM-based detection.</span></p>
+        <div class="tags">ML · LLM</div>
+      </article>
+      <article>
+        <h3>PopNet : Proof-of-Personhood</h3>
+        <div class="where"><span lang="fr">Projet de semestre, laboratoire DEDIS, EPFL</span><span lang="en">Semester project, DEDIS lab, EPFL</span></div>
+        <p><span lang="fr">Sous-équipe résistance à la coercition : conception, rapport et démonstration du mécanisme de délégation.</span><span lang="en">Coercion resistance subteam: design, report and a demo of the delegation mechanism.</span></p>
+        <div class="tags">Privacy · Systems</div>
+      </article>
+      <article>
+        <h3><span lang="fr">Fuzzing de libjpeg-turbo</span><span lang="en">Fuzzing libjpeg-turbo</span></h3>
+        <div class="where">EPFL · OSS-Fuzz</div>
+        <p><span lang="fr">Recherche de vulnérabilités dans une bibliothèque de traitement d'images largement utilisée, avec l'infrastructure OSS-Fuzz.</span><span lang="en">Vulnerability discovery in a widely used image library using the OSS-Fuzz infrastructure.</span></p>
+        <div class="tags">C · Fuzzing</div>
+      </article>
+      <article>
+        <h3><span lang="fr">Client SCION en Go</span><span lang="en">SCION client in Go</span></h3>
+        <div class="where">EPFL</div>
+        <p><span lang="fr">Développement d'un client pour l'architecture réseau sécurisée SCION.</span><span lang="en">Built a client for the SCION secure network architecture.</span></p>
+        <div class="tags">Go · Networking</div>
+      </article>
+      <article>
+        <h3>SMCompiler</h3>
+        <div class="where">EPFL</div>
+        <p><span lang="fr">Compilateur de calcul multipartite sécurisé (MPC) basé sur le secret sharing.</span><span lang="en">Secure multi-party computation (MPC) compiler based on secret sharing.</span></p>
+        <div class="tags">MPC · Python</div>
+      </article>
+    </div>
+  </section>
+
+  <section id="humain">
+    <h2><span lang="fr">Au-delà du code</span><span lang="en">Beyond code</span></h2>
+    <div class="human">
+      <div>
+        <h3><span lang="fr">Langues</span><span lang="en">Languages</span></h3>
+        <ul class="langs">
+          <li><span lang="fr">Français</span><span lang="en">French</span><span><span lang="fr">langue maternelle</span><span lang="en">native</span></span></li>
+          <li><span lang="fr">Arabe</span><span lang="en">Arabic</span><span><span lang="fr">langue maternelle</span><span lang="en">native</span></span></li>
+          <li><span lang="fr">Anglais</span><span lang="en">English</span><span><span lang="fr">courant</span><span lang="en">fluent</span></span></li>
+          <li><span lang="fr">Espagnol</span><span lang="en">Spanish</span><span><span lang="fr">courant</span><span lang="en">fluent</span></span></li>
+        </ul>
+      </div>
+      <div>
+        <h3><span lang="fr">Contact humain au quotidien</span><span lang="en">People-facing, every day</span></h3>
+        <p><span lang="fr">Employée polyvalente à la Migros EPFL pendant mes études (2024 à 2026), et assistante d'enseignement : j'aime expliquer, échanger et travailler avec des gens très différents.</span><span lang="en">All-round employee at Migros EPFL alongside my studies (2024 to 2026), and a teaching assistant: I enjoy explaining, exchanging and working with very different people.</span></p>
+      </div>
+      <div>
+        <h3><span lang="fr">Escape games</span><span lang="en">Escape rooms</span></h3>
+        <p><span lang="fr">Je n'en ai encore raté aucun. Même réflexe qu'en sécurité : chercher la faille, en équipe.</span><span lang="en">I haven't failed one yet. Same instinct as in security: find the flaw, as a team.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2><span lang="fr">Discutons</span><span lang="en">Let's talk</span></h2>
+    <p><span lang="fr">Ouverte aux stages, projets de master et échanges autour de la sécurité de l'IA, du SOC et de la protection de la vie privée.</span><span lang="en">Open to internships, Master's thesis projects and conversations about AI security, SOC and privacy.</span></p>
+    <div class="links">
+      <a href="mailto:ton.email@exemple.ch">ton.email@exemple.ch</a>
+      <a href="https://www.linkedin.com/in/TON-PROFIL" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/TON-PSEUDO" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </section>
+</main>
+
+<footer>Ghalia Ben Salem · Lausanne</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('langbtn');
+  function set(l){
+    root.setAttribute('data-lang',l); root.setAttribute('lang',l);
+    btn.textContent = l==='fr' ? 'EN' : 'FR';
+    try{localStorage.setItem('lang',l)}catch(e){}
+  }
+  var saved=null; try{saved=localStorage.getItem('lang')}catch(e){}
+  if(saved==='fr'||saved==='en') set(saved);
+  btn.addEventListener('click',function(){ set(root.getAttribute('data-lang')==='fr'?'en':'fr') });
+})();
+</script>
+</body>
+</html>
